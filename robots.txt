@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cmhenry79.github.io/direct-beef-tools/sitemap.xml
