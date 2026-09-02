@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direct Beef Break-Even Calculator for Ranchers</title>
+  <meta name="description" content="Compare the net value of another cattle sale with the average packaged-beef price direct sales need to earn. Free, private, and no signup required.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cmhenry79.github.io/direct-beef-tools/">
+  <meta property="og:title" content="Would direct beef sales beat the other check?">
+  <meta property="og:description" content="A free ranch worksheet for comparing another sale option with direct-beef batch costs and earnings.">
+  <meta property="og:url" content="https://cmhenry79.github.io/direct-beef-tools/">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #08243d;
+      --blue: #0d5eae;
+      --blue-dark: #08335d;
+      --paper: #f6f8f7;
+      --steel: #d7e0e2;
+      --rule: #9aabb2;
+      --orange: #c94f26;
+      --white: #ffffff;
+      --muted: #536974;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--steel);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+
+    .masthead {
+      border-bottom: 5px solid var(--blue);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .masthead-inner,
+    main,
+    footer {
+      width: min(1180px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .masthead-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 72px;
+    }
+
+    .brand {
+      font-family: "Arial Narrow", "Franklin Gothic Medium", Arial, sans-serif;
+      font-size: 1.35rem;
+      font-stretch: condensed;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .source-link {
+      color: #b7dcff;
+      font-size: 0.84rem;
+      font-weight: 750;
+      text-underline-offset: 4px;
+    }
+
+    main { padding-block: 54px 72px; }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: "Arial Narrow", "Franklin Gothic Medium", Arial, sans-serif;
+      font-stretch: condensed;
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      line-height: 0.92;
+    }
+
+    h1 { font-size: clamp(3.25rem, 8vw, 7.4rem); }
+    h2 { font-size: clamp(2rem, 4vw, 3.6rem); }
+
+    .intro p {
+      max-width: 40rem;
+      margin: 0;
+      color: #314c59;
+      font-size: 1.03rem;
+    }
+
+    .ticket {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+      border: 1px solid #758a93;
+      background: var(--paper);
+      box-shadow: 12px 14px 0 rgba(8, 36, 61, 0.13);
+    }
+
+    .inputs { padding: clamp(24px, 5vw, 50px); }
+
+    .section-label {
+      margin: 0 0 12px;
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .instruction {
+      max-width: 42rem;
+      margin: 14px 0 28px;
+      color: var(--muted);
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--rule);
+    }
+
+    label {
+      display: block;
+      min-width: 0;
+      padding: 18px 18px 18px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    label:nth-child(even) {
+      padding-right: 0;
+      padding-left: 18px;
+      border-left: 1px solid var(--rule);
+    }
+
+    label strong,
+    label small { display: block; }
+    label strong { line-height: 1.25; }
+    label small { min-height: 2.8em; margin-top: 5px; color: var(--muted); }
+
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      border: 1px solid #7f949e;
+      background: var(--white);
+    }
+
+    .field span {
+      flex: none;
+      padding-left: 12px;
+      color: var(--muted);
+      font-weight: 850;
+    }
+
+    .field span.suffix { padding: 0 12px 0 0; }
+
+    input {
+      min-width: 0;
+      width: 100%;
+      min-height: 46px;
+      border: 0;
+      background: transparent;
+      padding: 10px 3px 10px 12px;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .field:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(13, 94, 174, 0.18);
+    }
+
+    .privacy {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 0.79rem;
+    }
+
+    .result {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--white);
+      padding: clamp(26px, 5vw, 50px);
+    }
+
+    .result::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -1px;
+      border-left: 2px dashed rgba(255, 255, 255, 0.34);
+      content: "";
+    }
+
+    .result-label { margin: 0; color: #a9d5fb; font-weight: 850; }
+
+    .price-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 10px;
+      margin-top: 20px;
+      padding-bottom: 26px;
+      border-bottom: 5px solid var(--orange);
+    }
+
+    .price {
+      font-family: "Arial Narrow", "Franklin Gothic Medium", Arial, sans-serif;
+      font-size: clamp(4rem, 9vw, 7.25rem);
+      font-stretch: condensed;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      line-height: 0.82;
+    }
+
+    .unit { color: #b7dcff; font-size: 1.35rem; font-weight: 900; }
+
+    .summary { margin: 25px 0 0; color: #d8e8f5; font-size: 1.05rem; }
+
+    dl {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin: 28px 0 0;
+      border: 1px solid #46647d;
+    }
+
+    dl div { padding: 16px; border-bottom: 1px solid #46647d; }
+    dl div:nth-child(odd) { border-right: 1px solid #46647d; }
+    dl div:nth-last-child(-n + 2) { border-bottom: 0; }
+    dt { color: #9ecdf5; font-size: 0.76rem; font-weight: 800; }
+    dd { margin: 5px 0 0; font-size: 1.35rem; font-weight: 900; }
+
+    .cta {
+      display: inline-flex;
+      justify-content: center;
+      margin-top: auto;
+      background: var(--white);
+      color: var(--blue-dark);
+      padding: 14px 18px;
+      font-weight: 900;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 4px 0 #6faee4;
+    }
+
+    .cta:hover { background: #eaf5ff; }
+    .cta:focus-visible,
+    .source-link:focus-visible,
+    .plain-link:focus-visible {
+      outline: 3px solid #6fb8f6;
+      outline-offset: 4px;
+    }
+
+    .explain {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: 42px;
+      margin-top: 46px;
+      border-top: 1px solid #879aa2;
+      padding-top: 38px;
+    }
+
+    .explain p { max-width: 47rem; margin: 0 0 16px; color: #405963; }
+    .plain-link { color: var(--blue-dark); font-weight: 850; text-underline-offset: 4px; }
+
+    footer {
+      border-top: 1px solid #879aa2;
+      padding-block: 24px 40px;
+      color: #435b66;
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 820px) {
+      .intro,
+      .ticket,
+      .explain { grid-template-columns: 1fr; }
+      .intro { gap: 22px; }
+      .result::before { display: none; }
+      .input-grid { grid-template-columns: 1fr; }
+      label,
+      label:nth-child(even) { padding-inline: 0; border-left: 0; }
+      label small { min-height: 0; }
+      .cta { margin-top: 30px; }
+    }
+
+    @media (max-width: 520px) {
+      .masthead-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: 16px; }
+      main { padding-top: 38px; }
+      dl { grid-template-columns: 1fr; }
+      dl div,
+      dl div:nth-child(odd),
+      dl div:nth-last-child(-n + 2) { border-right: 0; border-bottom: 1px solid #46647d; }
+      dl div:last-child { border-bottom: 0; }
+    }
+
+    @media print {
+      .masthead,
+      .cta,
+      footer { display: none; }
+      body { background: white; }
+      main { width: 100%; padding: 0; }
+      .ticket { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="https://bluecowbeef.com/tools/ranch-beef-pricing-calculator?utm_source=github_pages&amp;utm_medium=referral&amp;utm_campaign=direct_beef_tools">BlueCow ranch tools</a>
+      <a class="source-link" href="https://github.com/cmhenry79/direct-beef-tools">Worksheet and CSV on GitHub</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <h1 id="page-title">Would direct sales beat the other check?</h1>
+      <p>Use the net value of selling the animal another way, then add direct-sale costs and the earnings needed to justify the extra work.</p>
+    </section>
+
+    <section class="ticket" aria-labelledby="calculator-title">
+      <div class="inputs">
+        <p class="section-label">Your batch numbers</p>
+        <h2 id="calculator-title">Build the honest comparison.</h2>
+        <p class="instruction">Change any number. The price ticket updates immediately.</p>
+
+        <div class="input-grid">
+          <label for="packaged-pounds">
+            <strong>Finished packaged pounds</strong>
+            <small>The take-home pounds customers can actually buy.</small>
+            <span class="field"><input id="packaged-pounds" type="number" min="1" max="100000" step="1" value="500" inputmode="decimal"><span class="suffix">lb</span></span>
+          </label>
+          <label for="reserve-percent">
+            <strong>Reserve or unlikely to sell</strong>
+            <small>Family use, samples, shrink, damage, or slow inventory.</small>
+            <span class="field"><input id="reserve-percent" type="number" min="0" max="95" step="1" value="5" inputmode="decimal"><span class="suffix">%</span></span>
+          </label>
+          <label for="animal-value">
+            <strong>Net value from the other sale</strong>
+            <small>The check the ranch would keep after that option’s expenses.</small>
+            <span class="field"><span>$</span><input id="animal-value" type="number" min="0" max="1000000" step="50" value="1800" inputmode="decimal"></span>
+          </label>
+          <label for="processing-cost">
+            <strong>Processing and packaging</strong>
+            <small>Butcher, labels, boxes, and cold storage for this batch.</small>
+            <span class="field"><span>$</span><input id="processing-cost" type="number" min="0" max="1000000" step="50" value="1200" inputmode="decimal"></span>
+          </label>
+          <label for="other-costs">
+            <strong>Other direct-sale costs</strong>
+            <small>Delivery, advertising, labor, and costs not counted above.</small>
+            <span class="field"><span>$</span><input id="other-costs" type="number" min="0" max="1000000" step="50" value="300" inputmode="decimal"></span>
+          </label>
+          <label for="selling-fee-percent">
+            <strong>Selling and payment fees</strong>
+            <small>Marketplace, card, or other percentage fees on sales.</small>
+            <span class="field"><input id="selling-fee-percent" type="number" min="0" max="95" step="1" value="10" inputmode="decimal"><span class="suffix">%</span></span>
+          </label>
+          <label for="target-earnings">
+            <strong>Additional ranch earnings</strong>
+            <small>Dollars direct sales should leave above the other value and costs.</small>
+            <span class="field"><span>$</span><input id="target-earnings" type="number" min="0" max="1000000" step="50" value="2000" inputmode="decimal"></span>
+          </label>
+        </div>
+
+        <p class="privacy">Nothing is submitted or stored. All calculations happen in this browser.</p>
+      </div>
+
+      <div class="result" aria-live="polite">
+        <p class="result-label">Target average selling price</p>
+        <div class="price-line"><output class="price" id="target-price">$12.40</output><span class="unit">/ packaged lb</span></div>
+        <p class="summary" id="summary">Selling 475 packaged pounds at that average produces $5,888.89 in gross batch sales.</p>
+        <dl>
+          <div><dt>Break-even average</dt><dd id="break-even">$7.72 / lb</dd></div>
+          <div><dt>Total costs repaid</dt><dd id="total-costs">$3,300.00</dd></div>
+          <div><dt>Other-sale value repaid</dt><dd id="other-sale-value">$1,800.00</dd></div>
+          <div><dt>Additional ranch earnings</dt><dd id="earnings-result">$2,000.00</dd></div>
+        </dl>
+        <a class="cta" href="https://bluecowbeef.com/tools/ranch-beef-pricing-calculator?utm_source=github_pages&amp;utm_medium=referral&amp;utm_campaign=direct_beef_tools">Use the full calculator and storefront starter</a>
+      </div>
+    </section>
+
+    <section class="explain" aria-labelledby="read-result-title">
+      <h2 id="read-result-title">Read the result honestly.</h2>
+      <div>
+        <p>If the other-sale value is the net check you could take today, the direct-sale target repays that value first. It then repays processing and other costs, accounts for unsold pounds and percentage fees, and leaves the additional earnings shown.</p>
+        <p>This is a planning worksheet, not accounting, tax, or legal advice. Weight, class, condition, location, timing, freight, commission, customer demand, and the costs entered here change the answer.</p>
+        <a class="plain-link" href="./direct-beef-break-even.csv">Download the spreadsheet-ready CSV</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>Free ranch planning resource from BlueCow Beef. No account, tracking script, or data submission.</footer>
+
+  <script>
+    (() => {
+      const ids = ["packaged-pounds", "reserve-percent", "animal-value", "processing-cost", "other-costs", "selling-fee-percent", "target-earnings"];
+      const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+      const value = (id, minimum, maximum) => {
+        const parsed = Number(document.getElementById(id).value);
+        if (!Number.isFinite(parsed)) return minimum;
+        return Math.min(maximum, Math.max(minimum, parsed));
+      };
+
+      function calculate() {
+        const packagedPounds = value("packaged-pounds", 0, 100000);
+        const reservePercent = value("reserve-percent", 0, 95);
+        const animalValue = value("animal-value", 0, 1000000);
+        const processingCost = value("processing-cost", 0, 1000000);
+        const otherCosts = value("other-costs", 0, 1000000);
+        const sellingFeePercent = value("selling-fee-percent", 0, 95);
+        const targetEarnings = value("target-earnings", 0, 1000000);
+        const sellablePounds = packagedPounds * (1 - reservePercent / 100);
+        const keptRate = 1 - sellingFeePercent / 100;
+        const totalCosts = animalValue + processingCost + otherCosts;
+        const targetGross = (totalCosts + targetEarnings) / keptRate;
+        const breakEvenPrice = sellablePounds > 0 ? totalCosts / keptRate / sellablePounds : 0;
+        const targetPrice = sellablePounds > 0 ? targetGross / sellablePounds : 0;
+
+        document.getElementById("target-price").textContent = sellablePounds > 0 ? currency.format(targetPrice) : "—";
+        document.getElementById("summary").textContent = sellablePounds > 0
+          ? `Selling ${sellablePounds.toLocaleString("en-US", { maximumFractionDigits: 2 })} packaged pounds at that average produces ${currency.format(targetGross)} in gross batch sales.`
+          : "Enter at least one finished packaged pound to calculate a target.";
+        document.getElementById("break-even").textContent = sellablePounds > 0 ? `${currency.format(breakEvenPrice)} / lb` : "—";
+        document.getElementById("total-costs").textContent = currency.format(totalCosts);
+        document.getElementById("other-sale-value").textContent = currency.format(animalValue);
+        document.getElementById("earnings-result").textContent = currency.format(targetEarnings);
+      }
+
+      ids.forEach((id) => document.getElementById(id).addEventListener("input", calculate));
+      calculate();
+    })();
+  </script>
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Direct Beef Break-Even Calculator for Ranchers","url":"https://cmhenry79.github.io/direct-beef-tools/","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Compare another cattle sale value with direct-beef batch costs and target ranch earnings."}
+  </script>
+</body>
+</html>
