@@ -4,9 +4,9 @@ Free, no-login planning resources for independent ranches selling beef directly 
 
 ## Live tools
 
-- [Direct beef vs. other-sale break-even calculator](https://bluecowbeef.com/tools/ranch-beef-pricing-calculator?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools)
-- [Fillable direct-beef order form](https://bluecowbeef.com/tools/beef-share-order-form-template?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools)
+- [Use the direct-beef break-even calculator](https://cmhenry79.github.io/direct-beef-tools/)
 - [Download the spreadsheet-ready CSV](./direct-beef-break-even.csv)
+- [Build a fillable direct-beef order form](https://bluecowbeef.com/tools/beef-share-order-form-template?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools&utm_content=order_form)
 
 ## Direct-beef break-even worksheet
 
@@ -47,8 +47,4 @@ With the example inputs, the target is about **$12.40 per sellable packaged poun
 - The model does not include taxes, financing, spoilage beyond the reserve, or costs you did not enter.
 - Actual cattle value varies with weight, class, condition, location, timing, freight, commission, and sale method.
 
-For an interactive version that updates every result as you type, use BlueCow's free calculator:
-
-**[Direct beef vs. other-sale break-even calculator](https://bluecowbeef.com/tools/ranch-beef-pricing-calculator?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools)**
-
-No account is required, and the numbers stay in the browser.
+If the result works and you want a place to sell under your ranch name, [start a private BlueCow storefront draft](https://bluecowbeef.com/for-ranchers?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools&utm_content=readme_private_draft#import). Use your ranch website to begin. The draft stays private until you confirm the ranch email and choose what happens next.
