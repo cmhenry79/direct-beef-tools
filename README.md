@@ -6,8 +6,10 @@ Free, no-login planning resources for independent ranches selling beef directly 
 
 - [Direct beef vs. other-sale break-even calculator](https://bluecowbeef.com/tools/ranch-beef-pricing-calculator?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools)
 - [Fillable direct-beef order form](https://bluecowbeef.com/tools/beef-share-order-form-template?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools)
+- [Download the spreadsheet-ready CSV](./direct-beef-break-even.csv)
 
 ## Direct-beef break-even worksheet
+
 Use this worksheet to answer one question: **What average packaged-beef price would make direct sales worth more than selling the animal another way?**
 
 It does not supply a national “correct” cattle or beef price. Start with the net check your ranch could realistically take from a sale barn, auction, dealer, or other buyer after that option's selling expenses.
