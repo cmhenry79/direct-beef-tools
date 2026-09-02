@@ -1,0 +1,14 @@
+Item,Value
+Finished packaged pounds,500
+Reserve or unlikely-to-sell share,0.05
+Net value from the other sale option,1800
+Processing and packaging,1200
+Other direct-sale batch costs,300
+Selling and payment fees,0.10
+Additional ranch earnings target,2000
+,
+Sellable packaged pounds,=B2*(1-B3)
+Break-even gross revenue,=(B4+B5+B6)/(1-B7)
+Break-even average per pound,=B11/B10
+Target gross revenue,=(B4+B5+B6+B8)/(1-B7)
+Target average per pound,=B13/B10
