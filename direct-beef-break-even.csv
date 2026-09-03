@@ -12,3 +12,5 @@ Break-even gross revenue,=(B4+B5+B6)/(1-B7)
 Break-even average per pound,=B11/B10
 Target gross revenue,=(B4+B5+B6+B8)/(1-B7)
 Target average per pound,=B13/B10
+,
+Private storefront draft,https://bluecowbeef.com/for-ranchers?utm_source=github_csv&utm_medium=referral&utm_campaign=direct_beef_tools&utm_content=worksheet_private_draft#import

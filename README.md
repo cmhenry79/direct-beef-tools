@@ -8,6 +8,8 @@ Free, no-login planning resources for independent ranches selling beef directly 
 - [Download the spreadsheet-ready CSV](./direct-beef-break-even.csv)
 - [Build a fillable direct-beef order form](https://bluecowbeef.com/tools/beef-share-order-form-template?utm_source=github_repo&utm_medium=referral&utm_campaign=direct_beef_tools&utm_content=order_form)
 
+Enter a batch once, then use **Copy a link to these numbers** to share the same scenario with a partner, processor, lender, or adviser. The link contains only the worksheet numbers—no account or contact information.
+
 ## Direct-beef break-even worksheet
 
 Use this worksheet to answer one question: **What average packaged-beef price would make direct sales worth more than selling the animal another way?**

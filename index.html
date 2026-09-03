@@ -252,7 +252,6 @@
     .cta {
       display: inline-flex;
       justify-content: center;
-      margin-top: auto;
       background: var(--white);
       color: var(--blue-dark);
       padding: 14px 18px;
@@ -263,6 +262,29 @@
     }
 
     .cta:hover { background: #eaf5ff; }
+    .result-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 30px;
+    }
+    .share-button {
+      min-height: 48px;
+      border: 1px solid #6faee4;
+      background: transparent;
+      color: var(--white);
+      padding: 12px 18px;
+      font: inherit;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .share-button:hover { background: rgba(111, 174, 228, 0.14); }
+    .share-status {
+      min-height: 1.3em;
+      margin: 0;
+      color: #b7dcff;
+      font-size: 0.78rem;
+    }
     .cta-note {
       margin: 12px 0 0;
       color: #bfd3e8;
@@ -270,6 +292,7 @@
       line-height: 1.55;
     }
     .cta:focus-visible,
+    .share-button:focus-visible,
     .source-link:focus-visible,
     .plain-link:focus-visible {
       outline: 3px solid #6fb8f6;
@@ -305,7 +328,7 @@
       label,
       label:nth-child(even) { padding-inline: 0; border-left: 0; }
       label small { min-height: 0; }
-      .cta { margin-top: 30px; }
+      .result-actions { margin-top: 30px; }
     }
 
     @media (max-width: 520px) {
@@ -386,7 +409,7 @@
           </label>
         </div>
 
-        <p class="privacy">Nothing is submitted or stored. All calculations happen in this browser.</p>
+        <p class="privacy">Nothing is submitted or stored. Calculations stay in this browser. A scenario link includes only the worksheet numbers you choose to share.</p>
       </div>
 
       <div class="result" aria-live="polite">
@@ -399,8 +422,12 @@
           <div><dt>Other-sale value repaid</dt><dd id="other-sale-value">$1,800.00</dd></div>
           <div><dt>Additional ranch earnings</dt><dd id="earnings-result">$2,000.00</dd></div>
         </dl>
-        <a class="cta" href="https://bluecowbeef.com/for-ranchers?utm_source=github_pages&amp;utm_medium=referral&amp;utm_campaign=direct_beef_tools&amp;utm_content=result_private_draft#import">Start a private storefront draft</a>
-        <p class="cta-note">Use your ranch website to begin. Your draft stays private until you confirm the ranch email and choose what happens next.</p>
+        <div class="result-actions">
+          <a class="cta" href="https://bluecowbeef.com/for-ranchers?utm_source=github_pages&amp;utm_medium=referral&amp;utm_campaign=direct_beef_tools&amp;utm_content=result_private_draft#import">Start a private storefront draft</a>
+          <p class="cta-note">Use your ranch website to begin. Your draft stays private until you confirm the ranch email and choose what happens next.</p>
+          <button class="share-button" id="share-scenario" type="button">Copy a link to these numbers</button>
+          <p class="share-status" id="share-status" role="status" aria-live="polite"></p>
+        </div>
       </div>
     </section>
 
@@ -419,6 +446,15 @@
   <script>
     (() => {
       const ids = ["packaged-pounds", "reserve-percent", "animal-value", "processing-cost", "other-costs", "selling-fee-percent", "target-earnings"];
+      const queryKeys = {
+        "packaged-pounds": "pounds",
+        "reserve-percent": "reserve",
+        "animal-value": "animal",
+        "processing-cost": "processing",
+        "other-costs": "other",
+        "selling-fee-percent": "fees",
+        "target-earnings": "earnings"
+      };
       const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
       const value = (id, minimum, maximum) => {
         const parsed = Number(document.getElementById(id).value);
@@ -451,7 +487,28 @@
         document.getElementById("earnings-result").textContent = currency.format(targetEarnings);
       }
 
+      const incoming = new URLSearchParams(window.location.search);
+      Object.entries(queryKeys).forEach(([id, key]) => {
+        if (!incoming.has(key)) return;
+        const number = Number(incoming.get(key));
+        if (Number.isFinite(number)) document.getElementById(id).value = String(number);
+      });
+
       ids.forEach((id) => document.getElementById(id).addEventListener("input", calculate));
+      document.getElementById("share-scenario").addEventListener("click", async () => {
+        const scenario = new URL(window.location.href);
+        scenario.search = "";
+        scenario.hash = "";
+        Object.entries(queryKeys).forEach(([id, key]) => scenario.searchParams.set(key, document.getElementById(id).value));
+        const status = document.getElementById("share-status");
+        try {
+          await navigator.clipboard.writeText(scenario.toString());
+          status.textContent = "Scenario link copied. It contains these worksheet numbers and no account information.";
+        } catch {
+          window.prompt("Copy this scenario link:", scenario.toString());
+          status.textContent = "The scenario link is ready to copy.";
+        }
+      });
       calculate();
     })();
   </script>
